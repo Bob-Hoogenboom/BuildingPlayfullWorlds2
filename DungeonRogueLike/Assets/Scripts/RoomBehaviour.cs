@@ -10,22 +10,13 @@ public class RoomBehaviour : MonoBehaviour
 {
     public GameObject[] walls;
 
-    public bool[] testStatus;
 
-
-
-    private void Start()
-    {
-        UpdateRoom(testStatus);
-    }
-
-
-    //Sets the entrances active and inactive in a single room
-    private void UpdateRoom(bool[] status)
+    //Sets the entrances active and inactive in a single room and needs to be read by DungeonGenerator.cs
+    public void UpdateRoom(bool[] status)
     {
         for(int i = 0; i < status.Length; i++)
         {
-            walls[i].SetActive(status[i]);
+            walls[i].SetActive(!status[i]);
         }
     }
 }
