@@ -929,7 +929,6 @@ MonoBehaviour:
   - {fileID: 254191996250017443}
   - {fileID: 254191996639722705}
   - {fileID: 254191996289029770}
-  testStatus: 00000000
 --- !u!1 &254191997051935752
 GameObject:
   m_ObjectHideFlags: 0
