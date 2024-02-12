@@ -35,6 +35,8 @@ public class DungeonGenerator : MonoBehaviour
         MazeGenerator();
     }
 
+
+    //This function instantiates the room objects
     private void GenerateDungeon()
     {
         for(int i =0; i < size.x; i++)
@@ -50,6 +52,8 @@ public class DungeonGenerator : MonoBehaviour
         
     }
 
+
+    //This function calculates the maze pattern using the backtracking algorythm.
     private void MazeGenerator()
     {
         dungeon = new List<Cell>();
