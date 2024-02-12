@@ -11,15 +11,33 @@ using UnityEngine;
 /// </summary>
 public class GridManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private List<GameObject> rooms;
+    Dictionary<Vector2Int, GridNode> grid = new Dictionary<Vector2Int, GridNode>();
+    Dictionary<Vector2Int, GridNode> Grid { get { return grid; } }
 
-    // Update is called once per frame
-    void Update()
+
+    public void GenerateGrid()
     {
-        
+        for (int i = 0; i < rooms.Count; i++)
+        {
+
+            foreach (var gridNode in collection)
+            {
+
+            }
+        }
+        foreach (GameObject room in rooms)
+        {
+            var gridNodes[] = GameObject.FindGameObjectsWithTag<Node>().GetComponent<GridNode>();
+
+        }
+        /*for (int i = 0; i < rooms.Count; i++)
+        {
+            var gridNodes[] = rooms(i).FindGameObjectsWithTag<Node>().;
+            for (int j = 0; j < length; j++)
+            {
+
+            }
+        }*/
     }
 }
