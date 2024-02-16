@@ -41,7 +41,7 @@ public class GridManager : MonoBehaviour
         if(gridNode == null)
         {
             gridNode = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Debug.LogError("DEV CLICHÉ #1: forgot to assign a reference for 'GameObject'");
+            Debug.LogError("DEV CLICHÉ #1: forgot to assign a reference");
             return;
         }
 
@@ -50,9 +50,31 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < gridSize.y * roomSize; y++)
             {
                 grid[x, y] = Instantiate(gridNode, new Vector3(x * nodeOffset - gridOffset, 0f, y * nodeOffset - gridOffset),Quaternion.identity);
+                grid[x, y].GetComponent<GridNode>().SetCoords(x, y);
                 grid[x, y].transform.parent = transform;
                 grid[x, y].gameObject.name = "GridNode (X-" + x.ToString() + " Y-" + y.ToString() + ")"; 
             }
         }
+    }
+
+    //Gets the Grid Coördinates of a node via the World Position
+    public Vector2Int GetGridPosFromWorld(Vector3 worldPosition)
+    {
+        int x = Mathf.FloorToInt(worldPosition.x / nodeOffset);
+        int y = Mathf.FloorToInt(worldPosition.y / nodeOffset);
+
+        x = Mathf.Clamp(x, 0, gridSize.x);
+        y = Mathf.Clamp(y, 0, gridSize.y);
+
+        return new Vector2Int(x, y);
+    }
+
+    //Gets the World Position of a node via the Grid Coördinates
+    public Vector3 GetWorldPosFromGrid(Vector2Int gridCoord)
+    {
+        float x = gridCoord.x * nodeOffset - gridOffset;
+        float y = gridCoord.y * nodeOffset - gridOffset;
+
+        return new Vector3(x, 0, y);
     }
 }
