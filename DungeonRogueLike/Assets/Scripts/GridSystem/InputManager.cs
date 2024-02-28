@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private GameObject playerOBJ;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private LayerMask gridLayer;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if(gridManager == null)
         {
@@ -18,15 +18,45 @@ public class InputManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            bool hasHit = Physics.Raycast(ray, out hit);
+
+            if (!hasHit) return;
+            if (hit.transform.tag == "GridNode")
+            {
+                Debug.Log("GridNodeHit");
+                MoveToTile(hit);
+            }
+            if (hit.transform.tag == "Unit")
+            {
+                Debug.Log("UnitHit");
+                InteractWithUnit();
+            }
+        }
     }
 
-    //Returns the GridNode object if the mouse Hovers over the GridNode
-    private GridNode GetMouseHoverNode()
+    //Handles the logic for moving and interacting with a grid tile
+    private void MoveToTile(RaycastHit hit)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        return null;
+        //get the targetPosition for the player to move to
+        GridNode gridNode = hit.transform.GetComponent<GridNode>();
+        var targetCords = gridNode.GetCoords();
+        var targetPos = gridManager.GetWorldPosFromGrid(targetCords);
+
+        var startCords = gridManager.GetGridPosFromWorld(playerOBJ.transform.position);
+
+        playerOBJ.transform.position = new Vector3(targetPos.x, transform.position.y, targetPos.z);
+    }
+
+    //Handles the logic for interacting with another gameObject on the grid
+    private void InteractWithUnit()
+    {
+
     }
 }

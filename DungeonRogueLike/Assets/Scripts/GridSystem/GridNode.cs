@@ -27,4 +27,9 @@ public class GridNode : MonoBehaviour
     {
         return new Vector2Int(_coordX, _coordY);
     }
+
+    public void GridOccupation(bool occupied)
+    {
+
+    }
 }
