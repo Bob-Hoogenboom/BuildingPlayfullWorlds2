@@ -416,7 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed34e360805e2a4c831aa4e9d230fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 10, y: 7}
+  size: {x: 3, y: 3}
   startPos: 0
   dungeonRoom: {fileID: 254191996920171696, guid: 507007b88c4e4874aaaec99c1d067fa3, type: 3}
   roomOffset: {x: 12, y: 12}
@@ -448,10 +448,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridNode: {fileID: 973373071646798598, guid: 6a991a3f76e872c419ea6c9e6bfde2bf, type: 3}
-  gridSize: {x: 10, y: 7}
-  roomSize: 3
-  gridOffset: 4
-  nodeOffset: 4
+  gridSize: {x: 3, y: 3}
+  roomSize: 4
+  gridOffset: 6
+  nodeOffset: 3
 --- !u!1001 &3003633163946874633
 PrefabInstance:
   m_ObjectHideFlags: 0

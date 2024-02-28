@@ -29,8 +29,8 @@ public class DungeonGenerator : MonoBehaviour
 
     List<Cell> dungeon;
 
-
-    private void Start()
+    //this function is set to Awake() because it is the first thing that shgould happen before anything else!
+    private void Awake()
     {
         MazeGenerator();
     }
