@@ -51,7 +51,7 @@ public class GridManager : MonoBehaviour
             {
                 grid[x, y] = Instantiate(gridNode, new Vector3(x * nodeOffset - gridOffset, 0f, y * nodeOffset - gridOffset),Quaternion.identity);
                 grid[x, y].GetComponent<GridNode>().SetCoords(x, y);
-                grid[x, y].GetComponent<GridNode>().CheckStaticOccupied();
+                grid[x, y].GetComponent<GridNode>().CheckStartOccupied();
                 grid[x, y].transform.parent = transform;
                 grid[x, y].gameObject.name = "GridNode (X-" + x.ToString() + " Y-" + y.ToString() + ")"; 
             }

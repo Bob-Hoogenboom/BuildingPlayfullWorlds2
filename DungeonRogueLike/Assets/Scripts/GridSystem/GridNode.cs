@@ -12,9 +12,8 @@ public class GridNode : MonoBehaviour
     [SerializeField] private Renderer _renderer;
         
     //variables
-    private LayerMask _gridStatic;
-    private int _coordX;
-    private int _coordY;
+    [SerializeField] private int _coordX;
+    [SerializeField] private int _coordY;
 
     //Occupied space variables
     public GameObject objectOnThisNode = null;
@@ -34,19 +33,39 @@ public class GridNode : MonoBehaviour
     }
 
     //checks on start if a static object is on top of the node and marks this node as forever occupied
-    public void CheckStaticOccupied()
+    public void CheckStartOccupied()
     {
-        _gridStatic = LayerMask.GetMask("GridStatic");
-        if(Physics.CheckSphere(transform.position, 1f, _gridStatic)) 
+        var gridStaticMask = LayerMask.GetMask("GridStatic");
+        var unitMask = LayerMask.GetMask("Unit");
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z), Vector3.up, out hit, 1f, gridStaticMask))
         {
-            isOccupied = true;
-            _renderer.material.color = Color.red;
+            Debug.Log("Hit gridStaticMask object!");
+            SetOccupation(hit.transform.gameObject, true);
+            _renderer.material.color = Color.black;
+        }
+        else if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z), Vector3.up, out hit, 1f, unitMask))
+        {
+            Debug.Log("Hit unitMask object!");
+            SetOccupation(hit.transform.gameObject, true);
+            var PlayerCont = hit.transform.GetComponent<PlayerController>();
+            PlayerCont.SetFirstGridNode(this);
         }
     }
 
-    public void GridOccupation(bool occupied)
+    public void SetOccupation(GameObject obj, bool occupied)
     {
+        isOccupied = occupied;
 
+        if (isOccupied)
+        {
+            objectOnThisNode = obj;
+            return;
+        }
+
+        objectOnThisNode = null;
     }
 
     private void OnDrawGizmos()
