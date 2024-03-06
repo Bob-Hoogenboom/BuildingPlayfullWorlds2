@@ -11,20 +11,8 @@ using UnityEngine;
 /// </summary>
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private GameObject gridNode;
-    private GameObject[,] grid;
-
-    [SerializeField] private Vector2Int gridSize;
-
-    [Tooltip("Defines the amount of nodes per room")]
-    [SerializeField] private int roomSize;
-
-    [Tooltip("Defines the offset for the origin of the grid")]
-    [SerializeField] private float gridOffset;
-
-    [Tooltip("Defines the spcae between each Node")] 
-    [SerializeField] private float nodeOffset = 4f;
-
+    [Tooltip("Scriptable Object with all the statistics to generate the grid over the maze")]
+    [SerializeField] private GenerationData genData;
 
     private void Start()
     {
@@ -35,25 +23,25 @@ public class GridManager : MonoBehaviour
     public void GenerateGrid()
     {
         //Instantiate gird object
-        grid = new GameObject[gridSize.x * roomSize, gridSize.y * roomSize];
+        genData.grid = new GameObject[genData.dungeonSize.x * genData.roomSize, genData.dungeonSize.y * genData.roomSize];
 
         //GameObject Assign Fail
-        if(gridNode == null)
+        if(genData.gridNode == null)
         {
-            gridNode = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            genData.gridNode = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Debug.LogError("DEV CLICHÉ #1: forgot to assign a reference");
             return;
         }
 
-        for (int x = 0; x < gridSize.x * roomSize; x++) 
+        for (int x = 0; x < genData.dungeonSize.x * genData.roomSize; x++) 
         {
-            for (int y = 0; y < gridSize.y * roomSize; y++)
+            for (int y = 0; y < genData.dungeonSize.y * genData.roomSize; y++)
             {
-                grid[x, y] = Instantiate(gridNode, new Vector3(x * nodeOffset - gridOffset, 0f, y * nodeOffset - gridOffset),Quaternion.identity);
-                grid[x, y].GetComponent<GridNode>().SetCoords(x, y);
-                grid[x, y].GetComponent<GridNode>().CheckStartOccupied();
-                grid[x, y].transform.parent = transform;
-                grid[x, y].gameObject.name = "GridNode (X-" + x.ToString() + " Y-" + y.ToString() + ")"; 
+                genData.grid[x, y] = Instantiate(genData.gridNode, new Vector3(x * genData.nodeOffset - genData.gridOffset, 0f, y * genData.nodeOffset - genData.gridOffset),Quaternion.identity);
+                genData.grid[x, y].GetComponent<GridNode>().SetCoords(x, y);
+                genData.grid[x, y].GetComponent<GridNode>().CheckStartOccupied();
+                genData.grid[x, y].transform.parent = transform;
+                genData.grid[x, y].gameObject.name = "GridNode (X-" + x.ToString() + " Y-" + y.ToString() + ")"; 
             }
         }
     }
@@ -61,11 +49,11 @@ public class GridManager : MonoBehaviour
     //Gets the Grid Coördinates of a node via the World Position
     public Vector2Int GetGridPosFromWorld(Vector3 worldPosition)
     {
-        int x = Mathf.FloorToInt(worldPosition.x / nodeOffset);
-        int y = Mathf.FloorToInt(worldPosition.y / nodeOffset);
+        int x = Mathf.FloorToInt(worldPosition.x / genData.nodeOffset);
+        int y = Mathf.FloorToInt(worldPosition.y / genData.nodeOffset);
 
-        x = Mathf.Clamp(x, 0, gridSize.x);
-        y = Mathf.Clamp(y, 0, gridSize.y);
+        x = Mathf.Clamp(x, 0, genData.dungeonSize.x);
+        y = Mathf.Clamp(y, 0, genData.dungeonSize.y);
 
         return new Vector2Int(x, y);
     }
@@ -73,8 +61,8 @@ public class GridManager : MonoBehaviour
     //Gets the World Position of a node via the Grid Coördinates
     public Vector3 GetWorldPosFromGrid(Vector2Int gridCoord)
     {
-        float x = gridCoord.x * nodeOffset - gridOffset;
-        float y = gridCoord.y * nodeOffset - gridOffset;
+        float x = gridCoord.x * genData.nodeOffset - genData.gridOffset;
+        float y = gridCoord.y * genData.nodeOffset - genData.gridOffset;
 
         return new Vector3(x, 0, y);
     }

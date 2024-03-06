@@ -10,14 +10,16 @@ public class GridNode : MonoBehaviour
 {
     //debugging
     [SerializeField] private Renderer _renderer;
-        
+
     //variables
+    [SerializeField] private GameObject visual;
     [SerializeField] private int _coordX;
     [SerializeField] private int _coordY;
 
     //Occupied space variables
     public GameObject objectOnThisNode = null;
     public bool isOccupied = false;
+
 
     //Sets this GridNode's coördinates
     public void SetCoords(int x, int y)
@@ -67,6 +69,7 @@ public class GridNode : MonoBehaviour
 
         objectOnThisNode = null;
     }
+
 
     private void OnDrawGizmos()
     {

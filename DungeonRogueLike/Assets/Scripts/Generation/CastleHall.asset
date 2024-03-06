@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70e25c366103a240861e712f287572c, type: 3}
+  m_Name: CastleHall
+  m_EditorClassIdentifier: 
+  mazeSize: {x: 3, y: 3}
+  startPos: 0
+  dungeonRoom: {fileID: 254191996920171696, guid: 507007b88c4e4874aaaec99c1d067fa3, type: 3}
+  roomOffset: {x: 12, y: 12}
+  gridNode: {fileID: 973373071646798598, guid: 6a991a3f76e872c419ea6c9e6bfde2bf, type: 3}
+  gridSize: {x: 3, y: 3}
+  roomSize: 4
+  gridOffset: 6
+  nodeOffset: 3

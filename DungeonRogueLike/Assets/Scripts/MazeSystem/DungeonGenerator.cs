@@ -22,10 +22,8 @@ public class DungeonGenerator : MonoBehaviour
         public bool[] status = new bool[4];
     }
 
-    [SerializeField] private Vector2 size;
-    [SerializeField] private int startPos = 0;
-    [SerializeField] private GameObject dungeonRoom;
-    [SerializeField] private Vector2 roomOffset;
+    [Tooltip("Scriptable Object with all the statistics to generate the maze")]
+    [SerializeField] private GenerationData genData;
 
     List<Cell> dungeon;
 
@@ -37,12 +35,12 @@ public class DungeonGenerator : MonoBehaviour
 
     private void GenerateDungeon()
     {
-        for(int i =0; i < size.x; i++)
+        for(int i =0; i < genData.dungeonSize.x; i++)
         {
-            for(int j = 0; j < size.y; j++)
+            for(int j = 0; j < genData.dungeonSize.y; j++)
             {
-                var newRoom = Instantiate(dungeonRoom, new Vector3(i * roomOffset.x, 0f , j * roomOffset.y), Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                newRoom.UpdateRoom(dungeon[Mathf.FloorToInt(i + j * size.x)].status);
+                var newRoom = Instantiate(genData.dungeonRoom, new Vector3(i * genData.roomOffset.x, 0f , j * genData.roomOffset.y), Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                newRoom.UpdateRoom(dungeon[Mathf.FloorToInt(i + j * genData.dungeonSize.x)].status);
 
                 newRoom.name += " " + i + " - " + j;
             }
@@ -54,15 +52,15 @@ public class DungeonGenerator : MonoBehaviour
     {
         dungeon = new List<Cell>();
 
-        for(int i = 0; i < size.x; i++)
+        for(int i = 0; i < genData.dungeonSize.x; i++)
         {
-            for (int j = 0; j < size.y; j++)
+            for (int j = 0; j < genData.dungeonSize.y; j++)
             {
                 dungeon.Add(new Cell());
             }
         }
 
-        int currentCell = startPos;
+        int currentCell = genData.startPos;
 
         Stack<int> path = new Stack<int>();
 
@@ -144,27 +142,27 @@ public class DungeonGenerator : MonoBehaviour
         //# Dont Repeat Yourself (DRY)?
 
         //NORTH ^
-        if (cell - size.x >= 0 && !dungeon[Mathf.FloorToInt(cell-size.x)].visited)
+        if (cell - genData.dungeonSize.x >= 0 && !dungeon[Mathf.FloorToInt(cell-genData.dungeonSize.x)].visited)
         {
-            neighbours.Add(Mathf.FloorToInt(cell -size.x));
+            neighbours.Add(Mathf.FloorToInt(cell -genData.dungeonSize.x));
         }
 
         //EAST > 
         //checks if the generatoir is at the most east side of the dungeon
-        if ((cell + 1) % size.x != 0 && !dungeon[Mathf.FloorToInt(cell + 1)].visited)
+        if ((cell + 1) % genData.dungeonSize.x != 0 && !dungeon[Mathf.FloorToInt(cell + 1)].visited)
         {
             neighbours.Add(Mathf.FloorToInt(cell + 1));
         }
 
         //SOUTH V
-        if (cell + size.x < dungeon.Count && !dungeon[Mathf.FloorToInt(cell + size.x)].visited)
+        if (cell + genData.dungeonSize.x < dungeon.Count && !dungeon[Mathf.FloorToInt(cell + genData.dungeonSize.x)].visited)
         {
-            neighbours.Add(Mathf.FloorToInt(cell + size.x));
+            neighbours.Add(Mathf.FloorToInt(cell + genData.dungeonSize.x));
         }
 
         //WEST < 
         //checks if the generatoir is at the most west side of the dungeon
-        if (cell % size.x != 0 && !dungeon[Mathf.FloorToInt(cell - 1)].visited)
+        if (cell % genData.dungeonSize.x != 0 && !dungeon[Mathf.FloorToInt(cell - 1)].visited)
         {
             neighbours.Add(Mathf.FloorToInt(cell - 1));
         }
