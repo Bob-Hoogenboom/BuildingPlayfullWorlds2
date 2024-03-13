@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/CastleHall.unity
+    path: Assets/Scenes/MainMenu.unity
+    guid: 64a6737e3efa379428deca20012839fe
+  - enabled: 1
+    path: Assets/Scenes/Levels/TheForest.unity
+    guid: ffe6859c4306e334abdc4f76a080cbff
+  - enabled: 1
+    path: Assets/Scenes/Levels/TheCastle.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

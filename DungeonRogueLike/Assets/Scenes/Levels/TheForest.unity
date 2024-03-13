@@ -153,10 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed34e360805e2a4c831aa4e9d230fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 5, y: 5}
-  startPos: 0
-  dungeonRoom: {fileID: 8940558087104714734, guid: 92be89763bce1054f8f7031bf4e68e6f, type: 3}
-  roomOffset: {x: 12, y: 12}
+  genData: {fileID: 11400000, guid: cc7a9cf2009377140bf61c85acc78e2f, type: 2}
 --- !u!4 &26861358
 Transform:
   m_ObjectHideFlags: 0
@@ -184,11 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2620349a4821f249a92b7c71b84d6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridNode: {fileID: 4673063515745716372, guid: 2b1e56112bfbe9b4f94200058cefba55, type: 3}
-  gridSize: {x: 5, y: 5}
-  roomSize: 2
-  gridOffset: 6
-  nodeOffset: 6
+  genData: {fileID: 11400000, guid: cc7a9cf2009377140bf61c85acc78e2f, type: 2}
 --- !u!1 &1416364702
 GameObject:
   m_ObjectHideFlags: 0
