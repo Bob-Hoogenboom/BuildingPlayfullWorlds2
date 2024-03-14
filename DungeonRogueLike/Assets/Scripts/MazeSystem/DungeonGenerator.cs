@@ -25,6 +25,8 @@ public class DungeonGenerator : MonoBehaviour
     [Tooltip("Scriptable Object with all the statistics to generate the maze")]
     [SerializeField] private GenerationData genData;
 
+    private bool bossHasSpawned = false;
+
     List<Cell> dungeon;
 
     //this function is set to Awake() because it is the first thing that shgould happen before anything else!
@@ -45,7 +47,6 @@ public class DungeonGenerator : MonoBehaviour
                 newRoom.name += " " + i + " - " + j;
             }
         }
-        
     }
 
     private void MazeGenerator()
@@ -80,11 +81,13 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if(path.Count == 0)
                 {
+                    //# SpawnEnemy prefab*
+                    SpawnEnemies();
                     break;
                 } 
                 else
                 {
-                    //research path.pop*
+                    //research Stack.Pop()*
                     currentCell = path.Pop();
                 }
             }
@@ -168,5 +171,20 @@ public class DungeonGenerator : MonoBehaviour
         }
 
         return neighbours;
+    }
+
+    
+    //spawns a boss firest and then spawns enemies after the boss
+    private void SpawnEnemies()
+    {
+        if (!bossHasSpawned)
+        {
+            Instantiate(genData.levelBoss);
+            bossHasSpawned = true;
+            return;
+        }
+        
+        //generate a random number inside the bounds of the list of enemies.length to spawn a random enemy
+        Instantiate(genData.enemies[0]);
     }
 }

@@ -38,14 +38,22 @@ public class GenerationData : ScriptableObject
     [Tooltip("Defines the spcae between each Node")]
     public float nodeOffset = 4f;
 
+    [Header("Enemies")]
 
-/*
-  ____        _     _            __          __         _    _               
- |  _ \      | |   | |           \ \        / /        | |  | |              
- | |_) | ___ | |__ | |__  _   _   \ \  /\  / /_ _ ___  | |__| | ___ _ __ ___ 
- |  _<  / _ \| '_ \| '_ \| | | |   \ \/  \/ / _` / __| |  __  |/ _ \ '__/ _ \
- | |_) | (_) | |_) | |_) | |_| |    \  /\  / (_| \__ \ | |  | |  __/ | |  __/
- |____/ \___/|_.__/|_.__/ \__, |     \/  \/ \__,_|___/ |_|  |_|\___|_|  \___|
-                           __/ |                                             
-                          |___/                                              */
+    [Tooltip("The boss that spawns at the end of the dungeon")]
+    public GameObject levelBoss;
+
+    [Tooltip("The enemies that are spawned after the boss is spawned")]
+    public GameObject[] enemies;
+
+
+    /*
+      ____        _     _            __          __         _    _               
+     |  _ \      | |   | |           \ \        / /        | |  | |              
+     | |_) | ___ | |__ | |__  _   _   \ \  /\  / /_ _ ___  | |__| | ___ _ __ ___ 
+     |  _<  / _ \| '_ \| '_ \| | | |   \ \/  \/ / _` / __| |  __  |/ _ \ '__/ _ \
+     | |_) | (_) | |_) | |_) | |_| |    \  /\  / (_| \__ \ | |  | |  __/ | |  __/
+     |____/ \___/|_.__/|_.__/ \__, |     \/  \/ \__,_|___/ |_|  |_|\___|_|  \___|
+                               __/ |                                             
+                              |___/                                              */
 }
