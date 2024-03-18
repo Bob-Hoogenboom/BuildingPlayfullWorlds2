@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70e25c366103a240861e712f287572c, type: 3}
   m_Name: CastleHall
   m_EditorClassIdentifier: 
-  mazeSize: {x: 3, y: 3}
+  dungeonSize: {x: 3, y: 3}
   startPos: 0
   dungeonRoom: {fileID: 254191996920171696, guid: 507007b88c4e4874aaaec99c1d067fa3, type: 3}
   roomOffset: {x: 12, y: 12}
   gridNode: {fileID: 973373071646798598, guid: 6a991a3f76e872c419ea6c9e6bfde2bf, type: 3}
-  gridSize: {x: 3, y: 3}
   roomSize: 4
   gridOffset: 6
   nodeOffset: 3
+  levelBoss: {fileID: 7805152014074821776, guid: 7dc2c1faed19227469bb3cf81f3fec23, type: 3}
+  enemies:
+  - {fileID: 7062787451366442318, guid: da4c7d270c144204ea26d91676a0024d, type: 3}
+  - {fileID: 2270497267384494297, guid: 09e34e43d781f74489bb2747769c2396, type: 3}
+  - {fileID: 3212424576582629941, guid: 204546d70464bfa4ba5e9d7c5bd4ac9b, type: 3}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// Source: https://www.youtube.com/watch?v=gHU5RQWbmWE&t=323s
 /// </summary>
@@ -18,5 +19,10 @@ public class RoomBehaviour : MonoBehaviour
         {
             walls[i].SetActive(!status[i]);
         }
+    }
+
+    public void SpawnEnemy(GameObject enemy)
+    {
+        Instantiate(enemy, transform.position, Quaternion.identity);
     }
 }

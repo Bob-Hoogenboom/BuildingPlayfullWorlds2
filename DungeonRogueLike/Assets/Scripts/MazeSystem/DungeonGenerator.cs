@@ -20,6 +20,7 @@ public class DungeonGenerator : MonoBehaviour
     {
         public bool visited = false;
         public bool[] status = new bool[4];
+        public GameObject enemy;
     }
 
     [Tooltip("Scriptable Object with all the statistics to generate the maze")]
@@ -43,6 +44,10 @@ public class DungeonGenerator : MonoBehaviour
             {
                 var newRoom = Instantiate(genData.dungeonRoom, new Vector3(i * genData.roomOffset.x, 0f , j * genData.roomOffset.y), Quaternion.identity, transform).GetComponent<RoomBehaviour>();
                 newRoom.UpdateRoom(dungeon[Mathf.FloorToInt(i + j * genData.dungeonSize.x)].status);
+
+                if(dungeon[Mathf.FloorToInt(i + j * genData.dungeonSize.x)].enemy != null){
+                    newRoom.SpawnEnemy(dungeon[Mathf.FloorToInt(i + j * genData.dungeonSize.x)].enemy);
+                }
 
                 newRoom.name += " " + i + " - " + j;
             }
@@ -81,13 +86,13 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if(path.Count == 0)
                 {
-                    //# SpawnEnemy prefab*
-                    SpawnEnemies();
+                    //Done generating, place Redcat[Player]
                     break;
                 } 
                 else
                 {
-                    //research Stack.Pop()*
+                    dungeon[currentCell].enemy = SetEnemy();
+                    //Stack.pop() returns the first value in the stack
                     currentCell = path.Pop();
                 }
             }
@@ -174,17 +179,17 @@ public class DungeonGenerator : MonoBehaviour
     }
 
     
-    //spawns a boss firest and then spawns enemies after the boss
-    private void SpawnEnemies()
+    //returns a boss first and then returns enemies after the boss
+    private GameObject SetEnemy()
     {
         if (!bossHasSpawned)
         {
-            Instantiate(genData.levelBoss);
             bossHasSpawned = true;
-            return;
+            return genData.levelBoss;
         }
-        
+
         //generate a random number inside the bounds of the list of enemies.length to spawn a random enemy
-        Instantiate(genData.enemies[0]);
+        var rando = Random.Range(0, genData.enemies.Length);
+        return genData.enemies[rando];
     }
 }
