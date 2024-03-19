@@ -52,8 +52,13 @@ public class GridNode : MonoBehaviour
         {
             Debug.Log("Hit unitMask object!");
             SetOccupation(hit.transform.gameObject, true);
-            var PlayerCont = hit.transform.GetComponent<PlayerController>();
-            PlayerCont.SetFirstGridNode(this);
+
+            //Make redcat detect its first gridnode instead of the gridnode detecting redcat
+            if (hit.transform.GetComponent<PlayerController>())
+            {
+                var PlayerCont = hit.transform.GetComponent<PlayerController>();
+                PlayerCont.SetFirstGridNode(this);
+            }
         }
     }
 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TheForest
   m_EditorClassIdentifier: 
   dungeonSize: {x: 3, y: 3}
+  player: {fileID: 8769850436330043250, guid: 9570c4bd805bae64ca6fad7efa012cb9, type: 3}
   startPos: 0
   dungeonRoom: {fileID: 8940558087104714734, guid: 92be89763bce1054f8f7031bf4e68e6f, type: 3}
   roomOffset: {x: 12, y: 12}

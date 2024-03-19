@@ -9,6 +9,9 @@ public class GenerationData : ScriptableObject
     [Tooltip("The size of the dungeon")]
     public Vector2Int dungeonSize = new Vector2Int(3, 3);
 
+    [Tooltip("A prefab of the player object")]
+    public GameObject player;
+
     [Header("Maze Generation")]
 
     [Tooltip("The position from where the alghoritm should start, '0' is the first room")]

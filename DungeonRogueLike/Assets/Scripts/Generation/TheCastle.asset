@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d70e25c366103a240861e712f287572c, type: 3}
-  m_Name: CastleHall
+  m_Name: TheCastle
   m_EditorClassIdentifier: 
   dungeonSize: {x: 3, y: 3}
+  player: {fileID: 8769850436330043250, guid: 9570c4bd805bae64ca6fad7efa012cb9, type: 3}
   startPos: 0
   dungeonRoom: {fileID: 254191996920171696, guid: 507007b88c4e4874aaaec99c1d067fa3, type: 3}
   roomOffset: {x: 12, y: 12}

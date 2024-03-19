@@ -86,6 +86,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if(path.Count == 0)
                 {
+                    dungeon[currentCell].enemy = genData.player;
                     //Done generating, place Redcat[Player]
                     break;
                 } 
