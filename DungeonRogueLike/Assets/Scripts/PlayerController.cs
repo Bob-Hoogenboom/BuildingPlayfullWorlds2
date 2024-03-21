@@ -59,18 +59,18 @@ public class PlayerController : MonoBehaviour
 
             if(nodeHit != _nextGridNode)
             {
-                //_nextGridNode highlight off
-                _nextGridNode = nodeHit;
-                //_nextGridNode highlight on
+                nodeHit.ToggleGlow(true);
+                _nextGridNode = nodeHit; 
             }
             else
             {
+                nodeHit.ToggleGlow(false);
                 if (nodeHit.isOccupied)
                 {
                     //switchcase for enemies/items/weapons/magic?
-                    if(nodeHit.objectOnThisNode.CompareTag("Enemy"))
+                    if(nodeHit.objectOnThisNode.CompareTag("Unit"))
                     {
-                        //walls give errors
+                        //Unit is another entity or enemy*
                         Debug.Log("Attack");
                     }
                     else
@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    //move onto gridnode
                     _currentGridNode.SetOccupation(playerOBJ, false);
                     playerOBJ.transform.position = _nextGridNode.transform.position;
                     _nextGridNode.SetOccupation(playerOBJ, true);

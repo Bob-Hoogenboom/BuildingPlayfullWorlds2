@@ -8,17 +8,18 @@ using UnityEngine;
 /// </summary>
 public class GridNode : MonoBehaviour
 {
-    //debugging
-    [SerializeField] private Renderer _renderer;
-
     //variables
-    [SerializeField] private GameObject visual;
+    [SerializeField] private new Renderer renderer;
+    [SerializeField] private Material glowMaterial;
+    [SerializeField] private Material unselectedMaterial;
     [SerializeField] private int _coordX;
     [SerializeField] private int _coordY;
 
     //Occupied space variables
     public GameObject objectOnThisNode = null;
     public bool isOccupied = false;
+
+
 
 
     //Sets this GridNode's coördinates
@@ -39,14 +40,13 @@ public class GridNode : MonoBehaviour
     {
         var gridStaticMask = LayerMask.GetMask("GridStatic");
         var unitMask = LayerMask.GetMask("Unit");
-
+ 
         RaycastHit hit;
 
         if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z), Vector3.up, out hit, 1f, gridStaticMask))
         {
             Debug.Log("Hit gridStaticMask object!");
-            SetOccupation(hit.transform.gameObject, true);
-            _renderer.material.color = Color.black;
+            Destroy(gameObject);
         }
         else if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z), Vector3.up, out hit, 1f, unitMask))
         {
@@ -73,6 +73,18 @@ public class GridNode : MonoBehaviour
         }
 
         objectOnThisNode = null;
+    }
+
+    public void ToggleGlow(bool glowState)
+    {
+        if (glowState)
+        {
+            renderer.material = glowMaterial;
+            //activate glow
+            return;
+        }
+        renderer.material = unselectedMaterial;
+        //deactivate glow
     }
 
 
