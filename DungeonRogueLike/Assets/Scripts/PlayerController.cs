@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rayLength;
     private RaycastHit _hit;
     private Vector3 _rayDir;
+
+
+    private void Awake()
+    {
+        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
+    }
+
+    private void GameManager_OnGameStateChanged(GameState state)
+    {
+        
+    }
 
     private void Start()
     {
@@ -92,9 +109,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public void SetFirstGridNode(GridNode node)
     {
         _currentGridNode = node;
     }
+
+
 }
