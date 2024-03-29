@@ -24,12 +24,18 @@ public class EnemyManager : MonoBehaviour
 
     private void GameManager_OnGameStateChanged(GameState state)
     {
-        //if gamemanager.enum.enemystate invoke every enemybehaviour to do something
+ 
     }
 
-    public void ActivateAction()
+    public void EnemyTurn()
     {
+        EnemyBehaviour[] enemies = FindObjectsOfType<EnemyBehaviour>();
 
+        foreach (EnemyBehaviour enemyBehaviour in enemies)
+        {
+           enemyBehaviour.EnemyAction();
+        }
+  
+        GameManager.Instance.UpdateGameState(GameState.PlayerTurn);
     }
-
 }

@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     {
         await Task.Delay(2000);
 
-        EnemyManager.Instance.ActivateAction();
+        EnemyManager.Instance.EnemyTurn();
 
         await Task.Delay(2000);
     }
