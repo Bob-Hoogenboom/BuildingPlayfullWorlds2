@@ -134,6 +134,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   rayLength: 3
+  m_health: 2
+  attackPower: 1
 --- !u!136 &855743777
 CapsuleCollider:
   m_ObjectHideFlags: 0

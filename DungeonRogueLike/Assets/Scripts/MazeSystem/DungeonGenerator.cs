@@ -70,7 +70,7 @@ public class DungeonGenerator : MonoBehaviour
 
         Stack<int> path = new Stack<int>();
 
-        //K is not a good naming convention*
+        //# K is not a good naming convention*
         int k = 0;
 
         while (k < 1000)
@@ -99,7 +99,7 @@ public class DungeonGenerator : MonoBehaviour
             }
             else
             {
-                //research path.push
+                //# research path.push
                 path.Push(currentCell);
 
                 int newCell = neighbours[Random.Range(0, neighbours.Count)];

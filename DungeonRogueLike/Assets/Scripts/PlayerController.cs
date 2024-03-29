@@ -3,17 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
+    [Header("General")]
     private GameObject playerOBJ;
     [SerializeField] private GridNode _currentGridNode;
     private GridNode _nextGridNode;
 
+    [Header("Detection")]
     [SerializeField] private LayerMask gridNodeMask;
     [SerializeField] private float rayLength;
     private RaycastHit _hit;
     private Vector3 _rayDir;
+    private bool _playerTurn;
 
+    [Header("Attack")]
+    [SerializeField] private int m_health = 3;
+    [SerializeField] private int attackPower = 1;
+
+    public int Health 
+    { 
+        get => m_health ;
+        set => m_health = value;
+    }
 
     private void Awake()
     {
@@ -27,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private void GameManager_OnGameStateChanged(GameState state)
     {
-        
+        _playerTurn = (state == GameState.PlayerTurn);
     }
 
     private void Start()
@@ -35,9 +47,9 @@ public class PlayerController : MonoBehaviour
         playerOBJ = gameObject;
     }
 
-    // Update is called once per frame
     private void Update()
     {
+        if (!_playerTurn) return;
         //WASD raycast to check gridnodes if occupied
         //North
         if (Input.GetKeyDown(KeyCode.W))
@@ -88,25 +100,41 @@ public class PlayerController : MonoBehaviour
                     if(nodeHit.objectOnThisNode.CompareTag("Unit"))
                     {
                         //Unit is another entity or enemy*
-                        Debug.Log("Attack");
+                        Attack(nodeHit);
+                        return;
                     }
                     else
                     {
-                        Debug.Log("Obstacle detected");
+                        //Debug.Log("Obstacle detected");
                         return;
                     }
                 }
                 else
                 {
                     //move onto gridnode
-                    _currentGridNode.SetOccupation(playerOBJ, false);
-                    playerOBJ.transform.position = _nextGridNode.transform.position;
-                    _nextGridNode.SetOccupation(playerOBJ, true);
-                    _currentGridNode = _nextGridNode;
-                    _nextGridNode = null;
+                    Move();
+                    return;
                 }
             }
         }
+    }
+
+    private void Move()
+    {
+        _currentGridNode.SetOccupation(playerOBJ, false);
+        playerOBJ.transform.position = _nextGridNode.transform.position;
+        _nextGridNode.SetOccupation(playerOBJ, true);
+        _currentGridNode = _nextGridNode;
+        _nextGridNode = null;
+
+        EndTurn();
+    }
+
+    private void Attack(GridNode enemyNode)
+    {
+        IDamagable iDamage = enemyNode.gameObject.GetComponent<IDamagable>();
+        iDamage.Damage(attackPower);
+        EndTurn();
     }
 
     public void SetFirstGridNode(GridNode node)
@@ -114,5 +142,14 @@ public class PlayerController : MonoBehaviour
         _currentGridNode = node;
     }
 
+    private void EndTurn()
+    {
+        GameManager.Instance.UpdateGameState(GameState.EnemyTurn);
+        _playerTurn = false;
+    }
 
+    public void Damage(int amount)
+    {
+       
+    }
 }

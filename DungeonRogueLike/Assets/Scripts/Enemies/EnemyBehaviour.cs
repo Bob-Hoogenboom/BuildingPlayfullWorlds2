@@ -8,22 +8,33 @@ public enum States
     Attack
 }
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour, IDamagable
 {
     [Header("GENERAL")]
     public States states;
-    [SerializeField] private float rayDistance;
-    [SerializeField] private LayerMask detectionMasks;
 
+    [Header("Detection")]
+    public GridNode _currentGridNode;
+    [SerializeField] private LayerMask detectionMasks; //Grid-Mask
+    [SerializeField] private float rayDistance = 3f;
+
+    [Header("MoveState")]
     [SerializeField] private List<GridNode> walkableNodes = new List<GridNode>();
+
+    [Header("AttackState")]
+    [SerializeField] private GridNode playerNode;
+    [SerializeField] private int m_health = 3;
+    [SerializeField] private int attackPower = 1;
+
+    public int Health 
+    {
+        get => m_health;
+        set => m_health = value;
+    }
 
     public void EnemyAction()
     {
         var list = GetOBJOnNode();
-        foreach (var x in list)
-        {
-            Debug.Log(x.ToString());
-        }
 
         //check every node to see if there is a player or fellow enemy nearby
         foreach (var gridNode in list)
@@ -32,13 +43,13 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 if (gridNode.objectOnThisNode.transform.gameObject.CompareTag("Player"))
                 {
+                    playerNode = gridNode;
                     states = States.Attack;
                     break;
                 }
             }
             else
             {
-                Debug.Log("Add node");
                 //if the node is empty add it to a list of walkable nodes
                 walkableNodes.Add(gridNode);
             }
@@ -58,15 +69,12 @@ public class EnemyBehaviour : MonoBehaviour
         switch (states)
         {
             case States.Idle:
-                Debug.Log("Enemy" + name + "Invoke Idle State");
                 EnemyIdle();
                 break;
             case States.Move:
-                Debug.Log("Enemy" + name + "Invoke Move State");
                 EnemyMove();
                 break;
             case States.Attack:
-                Debug.Log("Enemy" + name + "Invoke Attack State");
                 EnemyAttack();
                 break;
             default:
@@ -75,24 +83,33 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    //simply does nothing but can be filled with an effect later
     private void EnemyIdle()
     {
         EndOfTurn();
     }
 
+    //removes this object from the current node
+    //moves to the next node
+    //sets the new node as the new currentnode
     private void EnemyMove()
     {
+        _currentGridNode.SetOccupation(gameObject, false);
+
         int nextNode = Random.Range(0, walkableNodes.Count);
+        _currentGridNode = walkableNodes[nextNode];
+        transform.position = _currentGridNode.GetComponent<Transform>().position;
 
-        GridNode node = walkableNodes[nextNode];
-
-        transform.position = node.GetComponent<Transform>().position;
+        _currentGridNode.SetOccupation(gameObject, true);
 
         EndOfTurn();
     }
 
     private void EnemyAttack()
     {
+        IDamagable iDamagable = playerNode.gameObject.GetComponent<IDamagable>();
+
+        iDamagable.Damage(attackPower);
         EndOfTurn();
     }
 
@@ -147,4 +164,8 @@ public class EnemyBehaviour : MonoBehaviour
         Gizmos.DrawRay(transform.position, Vector3.back * rayDistance);
     }
 
+    public void Damage(int amount)
+    {
+        
+    }
 }

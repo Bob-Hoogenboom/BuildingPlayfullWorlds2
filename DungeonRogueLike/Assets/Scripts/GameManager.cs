@@ -68,12 +68,21 @@ public class GameManager : MonoBehaviour
 
     private async void HandleDecide()
     {
+        GameObject boss = null;
         EnemyBehaviour[] enemies = FindObjectsOfType<EnemyBehaviour>();
+        foreach(EnemyBehaviour enemyBehaviour in enemies)
+        {
+            if (enemyBehaviour.gameObject.CompareTag("Boss"))
+            {
+                boss = enemyBehaviour.gameObject;
+            }
+            
+        }
         PlayerController player = FindObjectOfType<PlayerController>();
 
         await Task.Delay(500);
 
-        if (enemies.Length <= 0) UpdateGameState(GameState.Victory);
+        if (boss == null) UpdateGameState(GameState.Victory);
         else if (player == null) UpdateGameState(GameState.Lose);
         else UpdateGameState(GameState.PlayerTurn);
     }

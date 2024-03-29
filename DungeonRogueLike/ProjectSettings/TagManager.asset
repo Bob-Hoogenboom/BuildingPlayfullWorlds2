@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Unit
   - GridNode
+  - Boss
   layers:
   - Default
   - TransparentFX

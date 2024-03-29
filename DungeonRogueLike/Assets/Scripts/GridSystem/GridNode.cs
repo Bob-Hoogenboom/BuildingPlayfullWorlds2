@@ -59,6 +59,12 @@ public class GridNode : MonoBehaviour
                 var PlayerCont = hit.transform.GetComponent<PlayerController>();
                 PlayerCont.SetFirstGridNode(this);
             }
+
+            if (hit.transform.GetComponent<EnemyBehaviour>())
+            {
+                EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
+                enemy._currentGridNode = this;
+            }
         }
     }
 

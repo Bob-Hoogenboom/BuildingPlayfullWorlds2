@@ -36,6 +36,6 @@ public class EnemyManager : MonoBehaviour
            enemyBehaviour.EnemyAction();
         }
   
-        GameManager.Instance.UpdateGameState(GameState.PlayerTurn);
+        GameManager.Instance.UpdateGameState(GameState.Decide);
     }
 }
