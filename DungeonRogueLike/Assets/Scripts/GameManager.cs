@@ -89,11 +89,11 @@ public class GameManager : MonoBehaviour
 
     private async void HandleEnemyTurn()
     {
-        await Task.Delay(2000);
+        await Task.Delay(1000);
 
         EnemyManager.Instance.EnemyTurn();
 
-        await Task.Delay(2000);
+        await Task.Delay(1000);
     }
 
     private void HandlePlayerTurn()

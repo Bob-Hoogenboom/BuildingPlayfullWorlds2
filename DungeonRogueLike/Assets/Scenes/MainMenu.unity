@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00044250488, y: -98.0725}
+  m_AnchoredPosition: {x: 0.00044250488, y: -98.072495}
   m_SizeDelta: {x: 0.00088500977, y: -213.855}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &113049229
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 127814412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c3834dd88b8dd944a4fc7e2d43cb0c0, type: 3}
+  m_Script: {fileID: 11500000, guid: f5c702199ce3d02479e2d721fd72424f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &169836362
@@ -632,7 +632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 161, y: 32.001}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 167.17, y: 167.53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &221852990
@@ -680,7 +680,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 127814417}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: Startlevel
         m_Mode: 5
         m_Arguments:
@@ -1448,7 +1448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00044250488, y: -98.2725}
+  m_AnchoredPosition: {x: 0.00044250488, y: -98.27251}
   m_SizeDelta: {x: 0.00088500977, y: -213.455}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1537371164
@@ -1583,7 +1583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 13, y: -1.6}
+  m_AnchoredPosition: {x: 13, y: -1.6000004}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1541518742
@@ -1849,7 +1849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1987377191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1916,7 +1916,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 127814417}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: Startlevel
         m_Mode: 5
         m_Arguments:
@@ -2118,7 +2118,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 127814417}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:

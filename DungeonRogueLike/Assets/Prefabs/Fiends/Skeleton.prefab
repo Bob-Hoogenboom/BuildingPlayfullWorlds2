@@ -60,11 +60,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states: 0
-  rayDistance: 3
+  _currentGridNode: {fileID: 0}
   detectionMasks:
     serializedVersion: 2
     m_Bits: 8
+  rayDistance: 3
   walkableNodes: []
+  playerNode: {fileID: 0}
+  m_health: 1
+  attackPower: 1
 --- !u!1001 &2544190388749901049
 PrefabInstance:
   m_ObjectHideFlags: 0

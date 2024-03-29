@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     [Header("Attack")]
     [SerializeField] private int m_health = 3;
     [SerializeField] private int attackPower = 1;
+    [SerializeField] private GameObject[] heartSprites;
+    private int healthIndex;
 
     public int Health 
     { 
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void Start()
     {
         playerOBJ = gameObject;
+        healthIndex = m_health;
     }
 
     private void Update()
@@ -97,9 +100,10 @@ public class PlayerController : MonoBehaviour, IDamagable
                 if (nodeHit.isOccupied)
                 {
                     //switchcase for enemies/items/weapons/magic?
-                    if(nodeHit.objectOnThisNode.CompareTag("Unit"))
+                    if(nodeHit.objectOnThisNode.GetComponent<EnemyBehaviour>())
                     {
                         //Unit is another entity or enemy*
+                        Debug.Log("Attack");
                         Attack(nodeHit);
                         return;
                     }
@@ -132,7 +136,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Attack(GridNode enemyNode)
     {
-        IDamagable iDamage = enemyNode.gameObject.GetComponent<IDamagable>();
+        IDamagable iDamage = enemyNode.objectOnThisNode.GetComponent<IDamagable>();
         iDamage.Damage(attackPower);
         EndTurn();
     }
@@ -150,6 +154,15 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void Damage(int amount)
     {
-       
+        for (int i = 0; i < amount; i++)
+        {
+            heartSprites[healthIndex - 1].SetActive(false);
+            healthIndex -= 1;
+        }
+
+        if ((m_health -= amount) <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

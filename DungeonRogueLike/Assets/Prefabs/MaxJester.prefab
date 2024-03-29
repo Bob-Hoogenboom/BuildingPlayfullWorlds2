@@ -59,7 +59,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7c5e3f2b7a65c488c19169d312829c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBoss: 0
   states: 0
   _currentGridNode: {fileID: 0}
   detectionMasks:
@@ -67,6 +66,9 @@ MonoBehaviour:
     m_Bits: 8
   rayDistance: 3
   walkableNodes: []
+  playerNode: {fileID: 0}
+  m_health: 3
+  attackPower: 1
 --- !u!1001 &9073033139315870582
 PrefabInstance:
   m_ObjectHideFlags: 0

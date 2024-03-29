@@ -107,7 +107,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
 
     private void EnemyAttack()
     {
-        IDamagable iDamagable = playerNode.gameObject.GetComponent<IDamagable>();
+        IDamagable iDamagable = playerNode.objectOnThisNode.GetComponent<IDamagable>();
+        Debug.Log(iDamagable);
 
         iDamagable.Damage(attackPower);
         EndOfTurn();
@@ -150,6 +151,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
     {
         walkableNodes.Clear();
         states = States.Idle;
+        playerNode = null;
     }
 
     private void OnDrawGizmos()
@@ -166,6 +168,10 @@ public class EnemyBehaviour : MonoBehaviour, IDamagable
 
     public void Damage(int amount)
     {
-        
+        if ((m_health -= amount) <= 0)
+        {
+            _currentGridNode.SetOccupation(gameObject, false);
+            Destroy(gameObject);
+        }
     }
 }
