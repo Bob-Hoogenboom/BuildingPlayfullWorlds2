@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamagable
@@ -20,8 +17,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     [Header("Attack")]
     [SerializeField] private int m_health = 3;
     [SerializeField] private int attackPower = 1;
-    [SerializeField] private GameObject[] heartSprites;
-    private int healthIndex;
 
     public int Health 
     { 
@@ -47,7 +42,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void Start()
     {
         playerOBJ = gameObject;
-        healthIndex = m_health;
     }
 
     private void Update()
@@ -154,14 +148,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void Damage(int amount)
     {
-        for (int i = 0; i < amount; i++)
-        {
-            heartSprites[healthIndex - 1].SetActive(false);
-            healthIndex -= 1;
-        }
-
         if ((m_health -= amount) <= 0)
         {
+            //#play death animation*
             Destroy(gameObject);
         }
     }
