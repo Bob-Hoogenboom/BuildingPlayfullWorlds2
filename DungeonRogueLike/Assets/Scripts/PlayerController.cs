@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamagable
 {
     [Header("General")]
+    private bool _canMove;
 
     [Header("Movement")]
     [SerializeField] private GridNode _currentGridNode;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void GameManager_OnGameStateChanged(GameState state)
     {
         _playerTurn = (state == GameState.PlayerTurn);
+        _canMove = (state == GameState.PlayerTurn);
     }
 
     private void Start()
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        if (!_playerTurn) return;
+        if (!_playerTurn && !_canMove) return;
         //WASD raycast to check gridnodes if occupied
         //North
         if (Input.GetKeyDown(KeyCode.W))
@@ -129,7 +131,7 @@ public class PlayerController : MonoBehaviour, IDamagable
                 else
                 {
                     //move onto gridnode
-                    Debug.Log("Move");
+                    _canMove = false;
                     StartCoroutine(MovePlayer());
                     return;
                 }
