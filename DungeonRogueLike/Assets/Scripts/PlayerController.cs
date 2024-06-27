@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        if (!_playerTurn && !_canMove) return;
+        if (!_playerTurn || !_canMove) return;
         //WASD raycast to check gridnodes if occupied
         //North
         if (Input.GetKeyDown(KeyCode.W))
@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
             if(nodeHit != _nextGridNode)
             {
+                if (_nextGridNode != null) { _nextGridNode.ToggleGlow(false); }
                 nodeHit.ToggleGlow(true);
                 _nextGridNode = nodeHit;
                 RotatePlayer();
@@ -134,7 +135,7 @@ public class PlayerController : MonoBehaviour, IDamagable
                     _canMove = false;
                     StartCoroutine(MovePlayer());
                     return;
-                }
+                } 
             }
         }
     }

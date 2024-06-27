@@ -70,6 +70,7 @@ MonoBehaviour:
   states: 0
   _currentGridNode: {fileID: 0}
   isDead: 0
+  m_health: 3
   curve:
     serializedVersion: 2
     m_Curve:
@@ -99,7 +100,7 @@ MonoBehaviour:
   detectionMasks:
     serializedVersion: 2
     m_Bits: 8
-  boxSize: {x: 0, y: 0, z: 0}
+  boxSize: {x: 3, y: 1, z: 3}
   rayDistance: 3
 --- !u!1001 &4736095156035096662
 PrefabInstance:
