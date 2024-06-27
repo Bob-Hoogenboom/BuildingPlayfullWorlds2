@@ -1,10 +1,18 @@
+using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// This script handles all the playerMovement actions like attacking, moving, health and animation
+/// Should be changed to a statemachine in the future but as controls are simple its not nessesary
+/// </summary>
 public class PlayerController : MonoBehaviour, IDamagable
 {
     [Header("General")]
-    private GameObject playerOBJ;
+
+    [Header("Movement")]
     [SerializeField] private GridNode _currentGridNode;
+    [SerializeField] private AnimationCurve curve;
+    [SerializeField] private float moveSpeed = .5f;
     private GridNode _nextGridNode;
 
     [Header("Detection")]
@@ -17,6 +25,13 @@ public class PlayerController : MonoBehaviour, IDamagable
     [Header("Attack")]
     [SerializeField] private int m_health = 3;
     [SerializeField] private int attackPower = 1;
+
+    [Header("Animation")]
+    [SerializeField] private Animator anim;
+    private int _isWalkingHash;
+    private int _isAttackingHash;
+    private int _isHitHash;
+    private int _isDefeatedHash;
 
     public int Health 
     { 
@@ -41,7 +56,11 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        playerOBJ = gameObject;
+        anim = GetComponentInChildren<Animator>();
+        _isWalkingHash = Animator.StringToHash("Walking");
+        _isAttackingHash = Animator.StringToHash("Attack");
+        _isHitHash = Animator.StringToHash("Hit");
+        _isDefeatedHash = Animator.StringToHash("Death");
     }
 
     private void Update()
@@ -81,57 +100,97 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (Physics.Raycast(transform.position, dir, out _hit,  rayLength, gridNodeMask))
         {
-            var nodeHit = _hit.transform.gameObject.GetComponent<GridNode>();
+            GridNode nodeHit = _hit.transform.gameObject.GetComponent<GridNode>();
 
             if(nodeHit != _nextGridNode)
             {
                 nodeHit.ToggleGlow(true);
-                _nextGridNode = nodeHit; 
+                _nextGridNode = nodeHit;
+                RotatePlayer();
             }
             else
             {
                 nodeHit.ToggleGlow(false);
                 if (nodeHit.isOccupied)
                 {
-                    //switchcase for enemies/items/weapons/magic?
+                    //#Switchcase for enemies/items/weapons/magic?
                     if(nodeHit.objectOnThisNode.GetComponent<EnemyBehaviour>())
                     {
                         //Unit is another entity or enemy*
-                        Debug.Log("Attack");
                         Attack(nodeHit);
                         return;
                     }
                     else
                     {
-                        //Debug.Log("Obstacle detected");
+                        //obstacle or wall
                         return;
                     }
                 }
                 else
                 {
                     //move onto gridnode
-                    Move();
+                    Debug.Log("Move");
+                    StartCoroutine(MovePlayer());
                     return;
                 }
             }
         }
     }
 
-    private void Move()
+    //Coroutine to lerp towards the new Node
+    private IEnumerator MovePlayer()
     {
-        _currentGridNode.SetOccupation(playerOBJ, false);
-        playerOBJ.transform.position = _nextGridNode.transform.position;
-        _nextGridNode.SetOccupation(playerOBJ, true);
+        _currentGridNode.SetOccupation(gameObject, false);
+
+        anim.SetBool(_isWalkingHash, true);
+
+        Vector3 start = _currentGridNode.transform.position;
+        Vector3 goal = _nextGridNode.transform.position;
+
+        float distance = Vector3.Distance(start, goal);
+        float duration= distance/moveSpeed;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            //Current Interpolation value
+            float current = elapsedTime / duration;
+            //The interpolation value in teh curve
+            float curveValue = curve.Evaluate(current); 
+
+            gameObject.transform.position = Vector3.Lerp(start, goal, curveValue);
+            yield return null;
+        }
+        //Fail-Save to ensure the player lands on the goal position
+        gameObject.transform.position = goal;
+
+        _nextGridNode.SetOccupation(gameObject, true);
         _currentGridNode = _nextGridNode;
         _nextGridNode = null;
 
+        anim.SetBool(_isWalkingHash, false);
+
         EndTurn();
+    }
+
+    private void RotatePlayer()
+    {
+        //Calculate the rotation in which the player should look
+        Vector3 targetDir =  _nextGridNode.transform.position - gameObject.transform.position;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, 360, 0.0f);
+
+        //Apply rotation
+        gameObject.transform.rotation = Quaternion.LookRotation(newDir);
     }
 
     private void Attack(GridNode enemyNode)
     {
         IDamagable iDamage = enemyNode.objectOnThisNode.GetComponent<IDamagable>();
         iDamage.Damage(attackPower);
+        anim.SetTrigger(_isAttackingHash);
+
         EndTurn();
     }
 
@@ -148,10 +207,10 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void Damage(int amount)
     {
+        anim.SetTrigger(_isHitHash);
         if ((m_health -= amount) <= 0)
         {
-            //#play death animation*
-            Destroy(gameObject);
+            anim.SetTrigger(_isDefeatedHash);
         }
     }
 }

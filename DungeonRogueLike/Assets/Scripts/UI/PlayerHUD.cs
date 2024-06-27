@@ -5,7 +5,6 @@ using UnityEngine.UI;
 /// Handles Player UI Info 
 /// only handles health for now but can be easily expanded upon
 /// </summary>
-
 public class PlayerHUD : MonoBehaviour
 {
     [Header("Refrences")]

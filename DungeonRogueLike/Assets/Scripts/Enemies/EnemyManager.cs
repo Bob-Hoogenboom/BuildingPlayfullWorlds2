@@ -29,11 +29,11 @@ public class EnemyManager : MonoBehaviour
 
     public void EnemyTurn()
     {
-        EnemyBehaviour[] enemies = FindObjectsOfType<EnemyBehaviour>();
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
 
-        foreach (EnemyBehaviour enemyBehaviour in enemies)
+        foreach (Enemy enemy in enemies)
         {
-           enemyBehaviour.EnemyAction();
+           enemy.StartEnemyAction();
         }
   
         GameManager.Instance.UpdateGameState(GameState.Decide);

@@ -2,10 +2,21 @@ using UnityEngine;
 using System;
 using System.Threading.Tasks;
 
+public enum GameState
+{
+    Tutorial,
+    PlayerTurn,
+    EnemyTurn,
+    Decide,
+    Victory,
+    Lose
+}
+
 /// <summary>
+/// A simple game manager script that gives the player control of their turn, then the enemies and 
+/// then checks if one of both parties is defeated
 /// TaroDev Tutorial: https://www.youtube.com/watch?v=4I0vonyqMi8
 /// </summary>
-/// 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -13,6 +24,9 @@ public class GameManager : MonoBehaviour
     public GameState state;
 
     public static event Action<GameState> OnGameStateChanged;
+
+    private BossBehaviour _boss;
+    private PlayerController _player;
 
     private void Awake()
     {
@@ -23,6 +37,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateGameState(GameState.Tutorial);
+        _boss = FindObjectOfType<BossBehaviour>();
+        _player = FindObjectOfType<PlayerController>();
     }
 
     public void UpdateGameState(GameState newState)
@@ -68,22 +84,10 @@ public class GameManager : MonoBehaviour
 
     private async void HandleDecide()
     {
-        GameObject boss = null;
-        EnemyBehaviour[] enemies = FindObjectsOfType<EnemyBehaviour>();
-        foreach(EnemyBehaviour enemyBehaviour in enemies)
-        {
-            if (enemyBehaviour.gameObject.CompareTag("Boss"))
-            {
-                boss = enemyBehaviour.gameObject;
-            }
-            
-        }
-        PlayerController player = FindObjectOfType<PlayerController>();
-
         await Task.Delay(500);
 
-        if (boss == null) UpdateGameState(GameState.Victory);
-        else if (player == null) UpdateGameState(GameState.Lose);
+        if (_boss.isDead == true) UpdateGameState(GameState.Victory);
+        else if (_player.Health <= 0) UpdateGameState(GameState.Lose);
         else UpdateGameState(GameState.PlayerTurn);
     }
 
@@ -103,16 +107,6 @@ public class GameManager : MonoBehaviour
 
     private void HandleSelectTutorial()
     {
-
+        Time.timeScale = 1;
     }
-}
-
-public enum GameState
-{
-    Tutorial,
-    PlayerTurn,
-    EnemyTurn,
-    Decide,
-    Victory,
-    Lose
 }
