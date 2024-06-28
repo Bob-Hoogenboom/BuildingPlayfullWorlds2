@@ -41,7 +41,10 @@ public class GridManager : MonoBehaviour
                 genData.grid[x, y].GetComponent<GridNode>().SetCoords(x, y);
                 genData.grid[x, y].GetComponent<GridNode>().CheckStartOccupied();
                 genData.grid[x, y].transform.parent = transform;
-                genData.grid[x, y].gameObject.name = "GridNode (X-" + x.ToString() + " Y-" + y.ToString() + ")"; 
+                genData.grid[x, y].gameObject.name = "GridNode (X-" + x.ToString() + " Y-" + y.ToString() + ")";
+
+                int random = Random.Range(0, genData.itemChance);
+                if (random == 0) { Instantiate(genData.item, new Vector3(x * genData.nodeOffset - genData.gridOffset, 0f, y * genData.nodeOffset - genData.gridOffset), Quaternion.identity); }
             }
         }
     }

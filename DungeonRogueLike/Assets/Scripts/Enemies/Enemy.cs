@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum EnemyStates
 {
@@ -21,6 +22,9 @@ public class Enemy : MonoBehaviour
     protected float moveSpeed = 5f;
     [SerializeField] private AnimationCurve curve;
 
+    [Header("Effects")]
+    public UnityEvent onDamageTaken;
+
 
     public int Health
     {
@@ -28,12 +32,16 @@ public class Enemy : MonoBehaviour
         set => m_health = value;
     }
 
+
     public void StartEnemyAction()
     {
+        if (isDead) return;
         EnemyAction();
     }
-        
+    
+
     public virtual void EnemyAction() { }
+
 
     protected void EnemyIdle()
     {
@@ -88,13 +96,16 @@ public class Enemy : MonoBehaviour
         EndOfTurn();
     }
 
+
     public void Damage(int amount)
     {
+        onDamageTaken.Invoke();
+
         if ((m_health -= amount) <= 0)
         {
             _currentGridNode.SetOccupation(gameObject, false);
             isDead = true;
-            gameObject.SetActive(false);
+            StartCoroutine(Defeated());
         }
     }
 
@@ -104,5 +115,13 @@ public class Enemy : MonoBehaviour
         walkableNodes.Clear();
         states = EnemyStates.Idle;
         playerNode = null;
+    }
+
+    private IEnumerator Defeated()
+    {
+        yield return new WaitForSeconds(.5f);
+
+        gameObject.SetActive(false);
+        yield return null;  
     }
 }

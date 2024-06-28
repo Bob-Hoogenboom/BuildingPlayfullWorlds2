@@ -17,6 +17,8 @@ MonoBehaviour:
   startPos: 0
   dungeonRoom: {fileID: 8940558087104714734, guid: 92be89763bce1054f8f7031bf4e68e6f, type: 3}
   roomOffset: {x: 12, y: 12}
+  itemChance: 40
+  item: {fileID: 3080924002392790859, guid: 2c7a0b69f8689b9469b6d096b97130b6, type: 3}
   gridNode: {fileID: 973373071646798598, guid: 6a991a3f76e872c419ea6c9e6bfde2bf, type: 3}
   roomSize: 4
   gridOffset: 6

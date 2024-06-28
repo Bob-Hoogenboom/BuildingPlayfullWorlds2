@@ -14,7 +14,6 @@ public class BossBehaviour : Enemy, IDamagable
     [SerializeField] private BoxCollider boxCollider;
     [SerializeField] private LayerMask detectionMasks; //Select Grid-Mask
     [SerializeField] private Vector3 boxSize;
-    [SerializeField] private float rayDistance = 3f;
 
     public override void EnemyAction()
     {

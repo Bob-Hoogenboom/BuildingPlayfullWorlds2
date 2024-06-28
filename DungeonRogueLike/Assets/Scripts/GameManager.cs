@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     private async void HandleDecide()
     {
-        await Task.Delay(500);
+        await Task.Delay(250);
 
         if (_boss.isDead == true) UpdateGameState(GameState.Victory);
         else if (_player.Health <= 0) UpdateGameState(GameState.Lose);
@@ -93,11 +93,11 @@ public class GameManager : MonoBehaviour
 
     private async void HandleEnemyTurn()
     {
-        await Task.Delay(1000);
+        await Task.Delay(500);
 
         EnemyManager.Instance.EnemyTurn();
 
-        await Task.Delay(1000);
+        await Task.Delay(500);
     }
 
     private void HandlePlayerTurn()

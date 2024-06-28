@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -38,8 +36,8 @@ public class GridNode : MonoBehaviour
     //checks on start if a static object is on top of the node and marks this node as forever occupied
     public void CheckStartOccupied()
     {
-        var gridStaticMask = LayerMask.GetMask("GridStatic");
-        var unitMask = LayerMask.GetMask("Unit");
+        int gridStaticMask = LayerMask.GetMask("GridStatic");
+        int unitMask = LayerMask.GetMask("Unit");
  
         RaycastHit hit;
 
@@ -56,7 +54,7 @@ public class GridNode : MonoBehaviour
             //Make redcat detect its first gridnode instead of the gridnode detecting redcat
             if (hit.transform.GetComponent<PlayerController>())
             {
-                var PlayerCont = hit.transform.GetComponent<PlayerController>();
+                PlayerController PlayerCont = hit.transform.GetComponent<PlayerController>();
                 PlayerCont.SetFirstGridNode(this);
             }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// This script handles all the playerMovement actions like attacking, moving, health and animation
@@ -33,6 +34,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     private int _isAttackingHash;
     private int _isHitHash;
     private int _isDefeatedHash;
+
+    [Header("Effects")]
+    public UnityEvent onDamageTaken;
+
 
     public int Health 
     { 
@@ -117,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamagable
                 if (nodeHit.isOccupied)
                 {
                     //#Switchcase for enemies/items/weapons/magic?
-                    if(nodeHit.objectOnThisNode.GetComponent<EnemyBehaviour>())
+                    if(nodeHit.objectOnThisNode.GetComponent<Enemy>())
                     {
                         //Unit is another entity or enemy*
                         Attack(nodeHit);
@@ -180,16 +185,16 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void RotatePlayer()
     {
-        //Calculate the rotation in which the player should look
-        Vector3 targetDir =  _nextGridNode.transform.position - gameObject.transform.position;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, 360, 0.0f);
+        // Calculate the direction in which the player should look
+        Vector3 targetDir = _nextGridNode.transform.position - gameObject.transform.position;
 
-        //Apply rotation
-        gameObject.transform.rotation = Quaternion.LookRotation(newDir);
+        // Apply the rotation
+        gameObject.transform.rotation = Quaternion.LookRotation(targetDir);
     }
 
     private void Attack(GridNode enemyNode)
     {
+        //Look for a damagble interface and deal damage to it
         IDamagable iDamage = enemyNode.objectOnThisNode.GetComponent<IDamagable>();
         iDamage.Damage(attackPower);
         anim.SetTrigger(_isAttackingHash);
@@ -210,6 +215,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void Damage(int amount)
     {
+        onDamageTaken.Invoke();
         anim.SetTrigger(_isHitHash);
         if ((m_health -= amount) <= 0)
         {

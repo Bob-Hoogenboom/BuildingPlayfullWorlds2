@@ -23,6 +23,12 @@ public class GenerationData : ScriptableObject
     [Tooltip("Distance between each of the rooms")]
     public Vector2 roomOffset;
 
+    [Tooltip("The random chance an item will spawn between 0 and how high this value is set")]
+    public int itemChance = 10;
+
+    [Tooltip("")]
+    public GameObject item;
+
 
     [Header("Grid Generation")]
 
